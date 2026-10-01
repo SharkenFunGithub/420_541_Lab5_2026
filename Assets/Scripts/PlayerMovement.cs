@@ -20,8 +20,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;            // true when standing on the ground
     private bool jumpRequested = false; // set in Update(), used later
     // The methods from the next steps go here, inside the class
+    public bool IsGrounded => isGrounded;
 
-        // Start runs once, just before the first frame
+    // Start runs once, just before the first frame
     private void Start()
     {
         // Find the Rigidbody on this GameObject so we can move it
@@ -34,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // 1. Ground Check
-        isGrounded = Physics.Raycast(transform.position + transform.up*groundDistance/2, -transform.up, groundDistance, groundMask);
+        isGrounded = Physics.Raycast(transform.position + transform.up* groundDistance/2, -transform.up, groundDistance, groundMask);
 
         // 2. Read Inputs
         turnInput = Input.GetAxisRaw("Horizontal"); // A/D or Left/Right turn input
@@ -70,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 targetVelocity = moveDirection * moveSpeed;
 
         // Apply movement while preserving vertical velocity (gravity/jumping)
-        rb.linearVelocity = new Vector3(targetVelocity.x, rb.linearVelocity.y, targetVelocity.z);
+        rb.linearVelocity = new Vector3(targetVelocity.x, 0f, targetVelocity.z);
     }
 
     private void Jump()
